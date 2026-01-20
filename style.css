@@ -1,0 +1,227 @@
+:root {
+    --bg-color: #050505;
+    --dot-completed: #e0e0e0;
+    --dot-future: #333333;
+    --dot-today-orange: #ff9f1c;
+    --dot-today-red: #ff4040;
+    --text-color: #888888;
+    --accent-color: #ffffff;
+}
+
+body {
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-color);
+    overflow: hidden;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    width: 90%;
+    max-width: 1000px;
+}
+
+.dots-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    gap: 12px;
+    /* Equal spacing */
+    width: 100%;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--dot-future);
+    transition: all 0.3s ease;
+}
+
+.dot.completed {
+    background-color: var(--dot-completed);
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+/* Today Styles */
+.dot.today {
+    transform: scale(1.3);
+    z-index: 2;
+}
+
+.dot.today.orange {
+    background-color: var(--dot-today-orange);
+    box-shadow: 0 0 10px var(--dot-today-orange);
+}
+
+.dot.today.blink-red {
+    background-color: var(--dot-today-red);
+    box-shadow: 0 0 10px var(--dot-today-red);
+    animation: blink 1s infinite alternate;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+        transform: scale(1.3);
+    }
+
+    to {
+        opacity: 0.6;
+        transform: scale(1.1);
+    }
+}
+
+/* Hourglass Emoji Animation */
+.dot.today.hourglass {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    /* Smaller fit */
+    width: 10px;
+    /* Force maintain grid cell size */
+    height: 10px;
+    line-height: 1;
+    animation: hourglass-flip 2s infinite ease-in-out;
+}
+
+/* Remove CSS shape pseudos */
+.dot.today.hourglass::before,
+.dot.today.hourglass::after {
+    display: none;
+}
+
+
+@keyframes hourglass-flip {
+
+    0%,
+    45% {
+        transform: rotate(0deg) scale(1.3);
+    }
+
+    50%,
+    95% {
+        transform: rotate(180deg) scale(1.3);
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1.3);
+    }
+}
+
+.footer-stats {
+    font-size: 1.1rem;
+    font-weight: 300;
+    opacity: 0.8;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.divider {
+    opacity: 0.3;
+}
+
+/* Settings */
+.settings-trigger {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    opacity: 0.3;
+    transition: opacity 0.3s;
+}
+
+.settings-trigger:hover {
+    opacity: 1;
+}
+
+.settings-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+}
+
+.settings-modal.active {
+    display: flex;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.settings-content {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 12px;
+    width: 300px;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+.option-group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 6px;
+    background: #252525;
+    transition: background 0.2s;
+}
+
+label:hover {
+    background: #303030;
+}
+
+input[type="radio"] {
+    accent-color: var(--dot-today-orange);
+}
+
+button#close-settings {
+    width: 100%;
+    padding: 10px;
+    background: var(--dot-today-orange);
+    border: none;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
